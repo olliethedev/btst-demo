@@ -1,0 +1,81 @@
+{
+    "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+    "vcs": {
+        "enabled": true,
+        "clientKind": "git",
+        "useIgnoreFile": true,
+        "defaultBranch": "main"
+    },
+    "files": {
+        "experimentalScannerIgnores": [
+            "node_modules",
+            ".next",
+            "out",
+            "dist",
+            "build",
+            ".turbo",
+            "*.config.js",
+            "*.config.mjs",
+            "pnpm-lock.yaml",
+            "package-lock.json",
+            "tsconfig.tsbuildinfo",
+            "app/globals.css"
+        ]
+    },
+    "formatter": {
+        "indentStyle": "space",
+        "indentWidth": 4
+    },
+    "linter": {
+        "rules": {
+            "a11y": {
+                "noSvgWithoutTitle": "off"
+            },
+            "suspicious": {
+                "noArrayIndexKey": "off",
+                "noDoubleEquals": {
+                    "fix": "safe",
+                    "level": "warn",
+                    "options": {}
+                }
+            },
+            "style": {
+                "noNonNullAssertion": "off",
+                "useSelfClosingElements": {
+                    "fix": "safe",
+                    "level": "warn"
+                },
+                "useTemplate": {
+                    "fix": "safe",
+                    "level": "warn"
+                }
+            },
+            "correctness": {
+                "noUnusedImports": "info"
+            },
+            "nursery": {
+                "useSortedClasses": {
+                    "fix": "safe",
+                    "level": "info",
+                    "options": {
+                        "functions": ["cn"]
+                    }
+                }
+            }
+        }
+    },
+    "javascript": {
+        "formatter": {
+            "semicolons": "asNeeded",
+            "trailingCommas": "none"
+        }
+    },
+    "overrides": [
+        {
+            "includes": ["**/*.css"],
+            "linter": {
+                "enabled": false
+            }
+        }
+    ]
+}
