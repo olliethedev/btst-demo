@@ -1,0 +1,41 @@
+name: E2E Smoke
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  e2e-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Setup Playwright
+        uses: microsoft/playwright-github-action@v1
+
+      - name: Run e2e smoke if e2e package exists
+        shell: bash
+        run: |
+          if pnpm -s ls --depth -1 2>/dev/null | grep -q "^e2e@"; then
+            pnpm --filter ./e2e run e2e:smoke
+          else
+            echo "e2e package not found; skipping smoke tests."
+          fi
+
+
